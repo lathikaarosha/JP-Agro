@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Formula;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,7 +40,7 @@ public class User {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @Column(name = "telephone_number",nullable = false)
+    @Column(name = "telephone_number", nullable = false)
     private String telephone_num;
 
     @Column(name = "email", nullable = false)
@@ -47,13 +49,11 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Work> workList = new ArrayList<>();
 
-
-
-
-
-
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserAttendens> userAttendens = new ArrayList<>();
 
 
 }

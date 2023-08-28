@@ -15,10 +15,11 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "applying_agrochemicals")
-public class To_Be_Apply_Agrochemicals {
+@Table(name = "works")
+public class Work {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "work_id")
     private int workdid;
 
@@ -32,15 +33,19 @@ public class To_Be_Apply_Agrochemicals {
     @Column(name = "time", nullable = false)
     private LocalTime time;
 
-    @Column(name = "agrochemical_id", nullable = false)
-    private Long agrochemical_id;
+    @ManyToOne
+    @JoinColumn(name = "agrochemical_id", referencedColumnName = "id")
+    private Agrochemicals agrochemicals;
 
     @Column(name = "chemical_usage", nullable = false)
     private float usage;
 
-    //other field to add new chemicals
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-
+    @Column(name = "status", nullable = false)
+    private Boolean status;
 
 
 }

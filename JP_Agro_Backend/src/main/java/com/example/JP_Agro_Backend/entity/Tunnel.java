@@ -27,7 +27,7 @@ public class Tunnel {
     private Integer number_of_plants;
 
     @OneToMany(mappedBy = "tunnel", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<To_Be_Apply_Agrochemicals> agrochemicalsList = new ArrayList<>();
+    private List<Work> workList = new ArrayList<>();
 
 
 }
