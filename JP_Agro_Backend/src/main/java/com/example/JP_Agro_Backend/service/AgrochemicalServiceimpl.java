@@ -1,9 +1,14 @@
 package com.example.JP_Agro_Backend.service;
 
+import com.example.JP_Agro_Backend.Exception.ResourceNotFoundExeption;
 import com.example.JP_Agro_Backend.dto.AgrochemicalDTO;
 import com.example.JP_Agro_Backend.entity.Agrochemicals;
 import com.example.JP_Agro_Backend.repository.AgrochemicalRepository;
+
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AgrochemicalServiceimpl implements AgrochemicalService{
@@ -22,11 +27,32 @@ public class AgrochemicalServiceimpl implements AgrochemicalService{
         //save the agrochemical
         Agrochemicals save = agrochemicalRepository.save(agrochemicals);
 
+
         //Agrochemicals to AgrochemicalDTO conversion
+        AgrochemicalDTO dto = toDTO(save);
 
-
-        return null;
+        return dto;
     }
+
+    @Override
+    public List<AgrochemicalDTO> getAllAgrochemicals() {
+        List<Agrochemicals> allAgrochemicals = agrochemicalRepository.findAll();
+
+        //Agrochemicals to AgrochemicalDTO conversion
+        List<AgrochemicalDTO> allAgrochemicalDTO = allAgrochemicals.stream().map(agrochemicals -> this.toDTO(agrochemicals)).collect(Collectors.toList());
+        return allAgrochemicalDTO;
+    }
+
+    @Override
+    public AgrochemicalDTO getAgrochemicalById(Long id) {
+        Agrochemicals agrochemicalsById = agrochemicalRepository.findById(id).orElseThrow(()->new ResourceNotFoundExeption("Product not found"));
+
+        //Agrochemical to AgrochemicalDTO conversion
+        AgrochemicalDTO getAgrochemicalDTOById = toDTO(agrochemicalsById);
+
+        return getAgrochemicalDTOById;
+    }
+
 
     public Agrochemicals toEntity(AgrochemicalDTO agrochemicalDTO){
         Agrochemicals agrochemicals = new Agrochemicals();
@@ -45,6 +71,15 @@ public class AgrochemicalServiceimpl implements AgrochemicalService{
 
     public AgrochemicalDTO toDTO(Agrochemicals agrochemicals){
         AgrochemicalDTO agrochemicalDTO = new AgrochemicalDTO();
+
+        agrochemicalDTO.setAgrochemical_id(agrochemicals.getId());
+        agrochemicalDTO.setCategory(agrochemicals.getCategory());
+        agrochemicalDTO.setName(agrochemicals.getName());
+        agrochemicalDTO.setDescription(agrochemicalDTO.getDescription());
+        agrochemicalDTO.setBrand_name(agrochemicals.getBrand_name());
+        agrochemicalDTO.setMfd(agrochemicals.getMfd());
+        agrochemicalDTO.setExp(agrochemicals.getExp());
+        agrochemicalDTO.setQuantity(agrochemicals.getQuantity());
 
         return agrochemicalDTO;
     }

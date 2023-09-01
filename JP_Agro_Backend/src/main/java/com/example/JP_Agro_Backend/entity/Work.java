@@ -12,8 +12,6 @@ import java.time.LocalTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "works")
 public class Work {
