@@ -1,6 +1,7 @@
 package com.example.JP_Agro_Backend.service;
 
 import com.example.JP_Agro_Backend.dto.AgrochemicalDTO;
+import com.example.JP_Agro_Backend.entity.Categories;
 
 import java.util.List;
 
@@ -10,5 +11,7 @@ public interface AgrochemicalService {
     public List<AgrochemicalDTO> getAllAgrochemicals();
 
     public AgrochemicalDTO getAgrochemicalById(Long id);
+
+    public List<AgrochemicalDTO> getAgochemicalsBycategory(Categories categories);
 
 }

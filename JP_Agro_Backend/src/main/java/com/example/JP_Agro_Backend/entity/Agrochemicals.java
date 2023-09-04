@@ -1,11 +1,8 @@
 package com.example.JP_Agro_Backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +15,7 @@ import java.util.List;
 public class Agrochemicals {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -30,9 +28,9 @@ public class Agrochemicals {
     @Column(name = "description")
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category", nullable = false)
-    private Agrochemical_categories category;
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+    private Categories categories;
 
     @Column(name = "manufacture_date", nullable = false)
     private Date mfd;

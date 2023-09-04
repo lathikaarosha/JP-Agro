@@ -7,8 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "agrochemical_catelog")
+//@Entity
+//@Table(name = "agrochemical_catelog")
 public class Agrochemical_catelog {
     //todo : complete this entity
 }

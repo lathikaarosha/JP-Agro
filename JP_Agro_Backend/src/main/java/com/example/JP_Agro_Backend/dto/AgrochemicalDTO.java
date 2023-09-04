@@ -1,6 +1,5 @@
 package com.example.JP_Agro_Backend.dto;
 
-import com.example.JP_Agro_Backend.entity.Agrochemical_categories;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +20,7 @@ public class AgrochemicalDTO {
 
     private String description;
 
-    private Agrochemical_categories category;
+    private CategoryDTO categoryDTO;
 
     private Date mfd;
 

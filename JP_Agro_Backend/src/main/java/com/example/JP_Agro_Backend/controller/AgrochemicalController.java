@@ -16,22 +16,21 @@ public class AgrochemicalController {
     @Autowired
     private AgrochemicalService agrochemicalService;
 
-    @PostMapping("/add")
+    @PostMapping("")
     @ResponseBody
-    //add agrochemicals
     public ResponseEntity<AgrochemicalDTO> addagrochemicals(@RequestBody AgrochemicalDTO agrochemical){
         AgrochemicalDTO addedAgrochemical = agrochemicalService.add_agrochemicals(agrochemical);
         return new ResponseEntity<AgrochemicalDTO>(addedAgrochemical, HttpStatus.CREATED);
     }
 
-    @GetMapping("/viewAll")
+    @GetMapping("")
     public ResponseEntity<List<AgrochemicalDTO>> viewAllAgrochemicals(){
         List<AgrochemicalDTO> allAgrochemicals = agrochemicalService.getAllAgrochemicals();
         return new ResponseEntity<List<AgrochemicalDTO>>(allAgrochemicals, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/viewById")
-    public ResponseEntity<AgrochemicalDTO> getAgrochemicalById(Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<AgrochemicalDTO> getAgrochemicalById(@PathVariable(name = "id") Long id){
         AgrochemicalDTO agrochemicaById = agrochemicalService.getAgrochemicalById(id);
         return new ResponseEntity<AgrochemicalDTO>(agrochemicaById, HttpStatus.OK);
     }
