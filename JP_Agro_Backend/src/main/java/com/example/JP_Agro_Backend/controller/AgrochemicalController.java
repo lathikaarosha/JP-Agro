@@ -17,8 +17,7 @@ public class AgrochemicalController {
     private AgrochemicalService agrochemicalService;
 
     @PostMapping("")
-    @ResponseBody
-    public ResponseEntity<AgrochemicalDTO> addagrochemicals(@RequestBody AgrochemicalDTO agrochemical){
+    public ResponseEntity<AgrochemicalDTO> addAgrochemicals(@RequestBody AgrochemicalDTO agrochemical){
         AgrochemicalDTO addedAgrochemical = agrochemicalService.add_agrochemicals(agrochemical);
         return new ResponseEntity<AgrochemicalDTO>(addedAgrochemical, HttpStatus.CREATED);
     }

@@ -44,4 +44,7 @@ public class Agrochemicals {
 
     @OneToMany(mappedBy = "agrochemicals", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Work> workList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "agrochemicals", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AgrochemicalCatalog> catelogs = new ArrayList<>();
 }

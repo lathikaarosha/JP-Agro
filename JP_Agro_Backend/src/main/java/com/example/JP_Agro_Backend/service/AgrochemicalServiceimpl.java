@@ -1,6 +1,7 @@
 package com.example.JP_Agro_Backend.service;
 
 import com.example.JP_Agro_Backend.Exception.ResourceNotFoundExeption;
+import com.example.JP_Agro_Backend.dto.AgrochemicalCatalogDTO;
 import com.example.JP_Agro_Backend.dto.AgrochemicalDTO;
 import com.example.JP_Agro_Backend.entity.Agrochemicals;
 import com.example.JP_Agro_Backend.entity.Categories;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AgrochemicalServiceimpl implements AgrochemicalService{
+public class AgrochemicalServiceimpl implements AgrochemicalService {
     private final AgrochemicalRepository agrochemicalRepository;
 
     public AgrochemicalServiceimpl(AgrochemicalRepository agrochemicalRepository) {
@@ -27,7 +28,7 @@ public class AgrochemicalServiceimpl implements AgrochemicalService{
     @Override
     public AgrochemicalDTO add_agrochemicals(AgrochemicalDTO agrochemical) {
 
-        Categories categories = categoryRepository.findById(agrochemical.getCategoryDTO().getCategory_id()).orElseThrow(()-> new ResourceNotFoundExeption("Category id not found"));
+        Categories categories = categoryRepository.findById(agrochemical.getCategoryDTO().getCategory_id()).orElseThrow(() -> new ResourceNotFoundExeption("Category id not found"));
 
         //AgrochemicalDTO to Agrochemicals conversion
         Agrochemicals agrochemicals = toEntity(agrochemical);
@@ -55,7 +56,7 @@ public class AgrochemicalServiceimpl implements AgrochemicalService{
 
     @Override
     public AgrochemicalDTO getAgrochemicalById(Long id) {
-        Agrochemicals agrochemicalsById = agrochemicalRepository.findById(id).orElseThrow(()->new ResourceNotFoundExeption("Product not found"));
+        Agrochemicals agrochemicalsById = agrochemicalRepository.findById(id).orElseThrow(() -> new ResourceNotFoundExeption("Agrochemical not found"));
 
         //Agrochemical to AgrochemicalDTO conversion
         AgrochemicalDTO getAgrochemicalDTOById = toDTO(agrochemicalsById);
@@ -68,8 +69,18 @@ public class AgrochemicalServiceimpl implements AgrochemicalService{
         return null;
     }
 
+    @Override
+    public void renewAgrochemical(AgrochemicalCatalogDTO catalogDTO) {
+        Agrochemicals agrochemicals = agrochemicalRepository.findById(catalogDTO.getAgrochemicalDTO().getAgrochemical_id())
+                .orElseThrow(()-> new ResourceNotFoundExeption("Agrochemical not found"));
 
-    public Agrochemicals toEntity(AgrochemicalDTO agrochemicalDTO){
+        agrochemicals.setQuantity(catalogDTO.getQuantity() + agrochemicals.getQuantity());
+        agrochemicalRepository.save(agrochemicals);
+
+    }
+
+
+    public Agrochemicals toEntity(AgrochemicalDTO agrochemicalDTO) {
         Agrochemicals agrochemicals = new Agrochemicals();
 
         agrochemicals.setId(agrochemicalDTO.getAgrochemical_id());
@@ -80,10 +91,10 @@ public class AgrochemicalServiceimpl implements AgrochemicalService{
         agrochemicals.setExp(agrochemicalDTO.getExp());
         agrochemicals.setQuantity(agrochemicalDTO.getQuantity());
 
-        return  agrochemicals;
+        return agrochemicals;
     }
 
-    public AgrochemicalDTO toDTO(Agrochemicals agrochemicals){
+    public AgrochemicalDTO toDTO(Agrochemicals agrochemicals) {
         AgrochemicalDTO agrochemicalDTO = new AgrochemicalDTO();
 
         agrochemicalDTO.setAgrochemical_id(agrochemicals.getId());
